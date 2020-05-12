@@ -13,7 +13,7 @@ aggr=['highest','most','biggest','largest','smallest','least','maximum','max','m
 by_mains=['cost','spend','usage','consumption','expend','kwh','gallons','kw','demand','peak kw','peak kwh','dth']
 
 utilities=['electric', 'gas', 'sewer', 'trash', 'water']
-locations=[]
+locations=[s]
 
 
 
