@@ -5,25 +5,41 @@ import nltk,numpy as np,pandas as pd, re,os,random
 questions=['what','which','when','how','list of','provide'] #'tell me','show'
 
 assist_verbs=['is the','are the','has']
-main_grups=['site group',	'site',	'account',	'utility',	'bill','location','month','year']
 
+main_grups=['site group',	'site',	'account',	'utility',	'bill','location','month','year']
+main_grups_labels=['sitegroup0',	'site0',	'account0',	'utility0',	'bill0','location0','month0','year0']
 
 pronouns=['having','has','for','in']
-aggr1=['highest','most','biggest','largest','smallest','least','maximum','max','min','minimum','average','mean','sum','total','count']
+
+aggr1=['highest','most','biggest','largest','smallest','least','maximum','max','min','minimum','average','mean','sum','total','count','lowest']
 aggr2=['greater than','less than','smaller than','higher than','lower than','around','between','from','all','above','below']
+
 by_mains=['cost','spend','usage','consumption','expend','kwh','gallons','kw','demand','peak kw','peak kwh','dth']
 
 utilities=['electric', 'gas', 'sewer', 'trash', 'water']
-locations=['alabama', ' al', 'alaska', ' ak', 'arizona', ' az', 'arkansas', ' ar', 'california', ' ca', 'colorado', ' co', 'connecticut', ' ct', 'delaware', ' de', 'florida', ' fl', 'georgia', ' ga', 'hawaii', ' hi', 'idaho', ' id', 'illinois', ' il', 'indiana', ' in', 'iowa', ' ia', 'kansas', ' ks', 'kentucky', 'ky', 'louisiana', ' la', 'maine', ' me', 'maryland', ' md', 'massachusetts', ' ma', 'michigan', ' mi', 'minnesota', ' mn', 'mississippi', ' ms', 'missouri', 'mo', 'montana', ' mt', 'nebraska', ' ne', 'nevada', ' nv', 'new hampshire', ' nh', 'new jersey', ' nj', 'new mexico', ' nm', 'new york', ' ny', 'north carolina', 'nc', 'north dakota', ' nd', 'ohio', ' oh', 'oklahoma', ' ok', 'oregon', ' or', 'pennsylvania', ' pa', 'rhode island', ' ri', 'south carolina', ' sc', 'south dakota', 'sd', 'tennessee', ' tn', 'texas', ' tx', 'utah', ' ut', 'vermont', ' vt', 'virginia', ' va', 'washington', ' wa', 'west virginia', ' wv', 'wisconsin', 'wi', 'wyoming', ' wy']
+utilites_labels=['electric0', 'gas0', 'sewer0', 'trash0', 'water0']
 
 
+locations=['alabama', ' al', 'alaska', ' ak', 'arizona', ' az', 'arkansas', ' ar', 'california', ' ca', 'colorado', ' co', 'connecticut', ' ct', 'delaware', ' de', 'florida', ' fl', 'georgia', ' ga', 'hawaii', ' hi', 'idaho', ' id', 'illinois', ' il', 'indiana', 'iowa', ' ia', 'kansas', ' ks', 'kentucky', 'ky', 'louisiana', ' la', 'maine', ' me', 'maryland', ' md', 'massachusetts', ' ma', 'michigan', ' mi', 'minnesota', ' mn', 'mississippi', ' ms', 'missouri', 'mo', 'montana', ' mt', 'nebraska', ' ne', 'nevada', ' nv', 'new hampshire', ' nh', 'new jersey', ' nj', 'new mexico', ' nm', 'new york', ' ny', 'north carolina', 'nc', 'north dakota', ' nd', 'ohio', ' oh', 'oklahoma', ' ok', 'oregon', ' or', 'pennsylvania', ' pa', 'rhode island', ' ri', 'south carolina', ' sc', 'south dakota', 'sd', 'tennessee', ' tn', 'texas', ' tx', 'utah', ' ut', 'vermont', ' vt', 'virginia', ' va', 'washington', ' wa', 'west virginia', ' wv', 'wisconsin', 'wi', 'wyoming', ' wy']
 
 months=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
 
 years=['2017','2018','2019','2020']
 
+#function for adding individual accoount,site ,sitegroup  to main groups
+def main_grup_with_ob(main_grup,ob):
+    if main_grup.__contains__('site group'):
+        main_grup[main_grup.index('site group')]='site group '+ob
+    elif main_grup.__contains__('site'):
+        main_grup[main_grup.index('site')]='site '+ob
+    elif main_grup.__contains__('account'):
+        main_grup[main_grup.index('account')]='account '+ob
+    return main_grup
 
-def question_template(ques):
+
+def question_template(ques,object):
+
+    random_selection=random.sample([0,1],1)[0]
 
     if ques=='what':
         assist_verb = random.sample(['is the', 'are the'], 1)
@@ -38,9 +54,12 @@ def question_template(ques):
         if (re.findall('are', assist_verb[0]).__len__() > 0) and len(main_grup) > 0:
             main_grup[0] = main_grup[0] + 's'
 
-        if utility.__len__()>1:
-            utility=['for '+utility[0]]
+        if random_selection:
+            ob=object
+            main_grup=main_grup_with_ob(main_grup,ob)
+
         year_and_mnth=False
+
         if main_grup.count('month')>0:
             main_grup.remove('month')
             if main_grup.count('year')>0:
@@ -76,26 +95,42 @@ def question_template(ques):
         elif len(location)>0:
             location = random.sample([' for ', 'in '], 1) + location
 
+
+        if by_main[0] in ['kwh','kw','demand','peak kw','peak kwh']:
+            utility=random.sample(['electric'],random.randint(0, 1))
+            temp_num_check=1
+        elif by_main[0] in ['dth','decatherm']:
+            utility=random.sample(['gas','natural gas'],random.randint(0, 1))
+            temp_num_check = 1
+        elif by_main[0] in ['gal','gallons']:
+            utility = random.sample(['water', 'sewer','trash'], random.randint(0, 2))
+            temp_num_check = 1
+
         if main_grup.count('utility'):
             main_grup.remove('utility')
             if len(utility) > 0:
                 utility = random.sample([' for ', ' by '], 1) + utility
+            elif temp_num_check == 1:
+                utility =[]
             else:
                 utility = random.sample([' for all utilities ', ' by all utilities '], 1)
-        elif len(location) > 0:
+        elif len(utility) > 0:
             utility = random.sample([' for ', 'by '], 1) + utility
 
 
 
 
-        # if len(main_grup) > 0:
-        #     main_grup[0]='of '+main_grup[0]
+        if len(main_grup) > 0:
+            main_grup[0]=random.sample([' for ', 'of '], 1)[0]+main_grup[0]
         if len(main_grup)>1:
+
             main_grup= [' and '.join(main_grup)]
 
-        l=[ques]+assist_verb+aggregate+by_main+main_grup+utility+month+year+location
+        sentence=[ques]+assist_verb+aggregate+by_main+main_grup+utility+month+year+location
 
-        return print(' '.join(l))
+
+
+        return print(' '.join(sentence))
 
     # elif question[0]=='how':
     #     assist_verb = random.sample(['much','many'], 1)
@@ -115,10 +150,11 @@ def question_template(ques):
 
 
 for i in range(10):
-    question_template('what')
+
 
     #
-    # object = ''.join(random.sample(list('absdawqe!13213231#$@%231'), random.randint(1, 20)))
+    object = ''.join(random.sample(list('absdawqe!13213231#$@%231'), random.randint(1, 20)))
+    question_template('what', object)
     #
     # assist_verb=random.sample(assist_verbs, 1)
     # question=random.sample(questions,1)
@@ -133,8 +169,6 @@ for i in range(10):
     #
     #
     #
-    # if aggregate[0] in ['average', 'mean', 'around']:
-    #     question[0] = 'what'
     #
     # if aggregate[0] in ['greater than','less than','smaller than','higher than','lower than','around','between','from','above','below']:
     #     temp_value=random.sample(range(0, 9999999), 1)[0]
@@ -147,18 +181,6 @@ for i in range(10):
     #         aggregate[0] = aggregate[0] + str(temp_value)
     #
     #
-    # if by_main[0] in ['kwh','kw','demand','peak kw','peak kwh']:
-    #     utility=random.sample(['electric'],random.randint(0, 1))
-    #     if 'utility' in main_grup:
-    #         main_grup.remove('utility')
-    # elif by_main in ['dth','decatherm']:
-    #     utility=random.sample(['gas','natural gas'],random.randint(0, 1))
-    #     if 'utility' in main_grup:
-    #         main_grup.remove('utility')
-    # elif by_main in ['gal','gallons']:
-    #     utility = random.sample(['water', 'sewer','trash'], random.randint(0, 2))
-    #     if 'utility' in main_grup:
-    #         main_grup.remove('utility')
     #
     #
     # if utility.__len__()>1:
