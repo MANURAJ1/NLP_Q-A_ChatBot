@@ -9,8 +9,8 @@ questions = ['what', 'which', 'when', 'how', 'list of', 'provide']  # 'tell me',
 
 assist_verbs = ['is the', 'are the', 'has']
 
-main_grups = ['site group','sitegroup', 'site', 'account', 'utility', 'bill', 'location', 'month', 'year']
-main_grups_labels = ['sitegroup0','sitegroup0', 'site0', 'account0', 'utility0', 'bill0', 'location0', 'month0', 'year0']
+main_grups = ['site group','sitegroup', 'site', 'account', 'utility', 'bill', 'location', 'month', 'year','vendor']
+main_grups_labels = ['sitegroup0','sitegroup0', 'site0', 'account0', 'utility0', 'bill0', 'location0', 'month0', 'year0','vendor0']
 main_grup_dict={main_grups[i]:main_grups_labels[i] for i in range(len(main_grups))}
 main_grup_dict['site group']= ['site_group0','site_group00']
 main_grup_dict['and']='O'
@@ -68,6 +68,10 @@ def main_grup_with_ob(main_grup, ob,main_grup_label):
         temp_var = main_grup.index('account')
         main_grup[temp_var] = 'account ' + ob
         main_grup_label=[main_grup_dict['account']] + ['account1']
+    elif main_grup.__contains__('vendor'):
+        temp_var = main_grup.index('vendor')
+        main_grup[temp_var] = 'vendor ' + ob
+        main_grup_label = [main_grup_dict['vendor']] + ['vendor1']
     return main_grup,main_grup_label,temp_var
 
 
@@ -223,7 +227,7 @@ def question_template(ques, object):
 
         # Main Group settings
         if main_grup.__len__()>0:
-            if random_selection:
+            if random_selection and main_grup in ['site group','sitegroup', 'site', 'account','vendor']:
                 main_grup, main_grup_label,temp = main_grup_with_ob(main_grup, object,main_grup_label)
                 temp=random.sample(['for', 'by','of'], 1) + [main_grup.pop(temp)]
                 main_grup=' and '.join(main_grup).split()
@@ -305,10 +309,10 @@ def question_template(ques, object):
     # elif question[0]=='list of':
     #     main_grup = random.sample(main_grups, random.randint(1, 3))
     #     assist_verb =[ '']
-with open("sent.txt",'w') as sf:
+with open("sents.txt",'w') as sf:
     with open("labels.txt",'w') as sl:
 
-        for i in range(10):
+        for i in range(100):
             #
             object = ''.join(random.sample(list('absdawqe!13213231#$@%231'), random.randint(1, 20)))
             ques=random.sample(['what','which','how','where','when'], 1)[0]

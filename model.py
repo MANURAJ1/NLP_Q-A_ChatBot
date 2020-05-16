@@ -1,4 +1,4 @@
-
+import torch
 # train_data = [
 #     ("Uber blew through $1 million a week", [(0, 4, 'ORG')]),
 #     ("Android Pay expands to Canada", [(0, 11, 'PRODUCT'), (23, 30, 'GPE')]),
