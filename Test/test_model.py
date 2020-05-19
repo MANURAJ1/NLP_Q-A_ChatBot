@@ -37,12 +37,12 @@ for i, word in enumerate(words):
     indx2word[i]=word
 for i, tags in enumerate(labels):
     tag[tags] = i
-    indx2tag[i]=tag
+    indx2tag[i]=tags
 
 vocab['PAD']=len(vocab.keys())
 tag['PAD']=len(tag.keys())
-
-
+indx2word[len(indx2word.keys())]='PAD'
+indx2tag[len(indx2tag.keys())]='PAD'
 
 
 
@@ -75,34 +75,36 @@ HIDDEN_DIM = 64
 # loss_function = nn.NLLLoss()
 # optimizer = optim.SGD(model.parameters(), lr=0.1)
 
-#Testing
+# Model Loading
 model=LSTMTagger(EMBEDDING_DIM,HIDDEN_DIM,len(vocab.keys()), len(tag.keys()))
 model.load_state_dict(torch.load('model_file.pth'))
 model.eval()
 
-tests=['which is the max spend  in  may  for  2017  for  alaska','which is the highest spending site','which is the max spend  in  may  for  2017  for  sitegroup alaska']
 
-testing_statement=tests[2]
-l=testing_statement.split()
-model_test_statement=[]
-
-for i in l:
-    stemed_word = nltk.PorterStemmer().stem(i)
-    lemmetized_word = nltk.WordNetLemmatizer().lemmatize(i)
-    if i in vocab.keys():
-        model_test_statement.append(vocab[i])
-    elif stemed_word in vocab.keys():
-        model_test_statement.append(vocab[stemed_word])
-    elif lemmetized_word in vocab.keys():
-        model_test_statement.append(vocab[lemmetized_word])
-    else:
-        model_test_statement.append(208)
-
-if len(model_test_statement)<25:
-    for i in range(len(model_test_statement),25):
-        model_test_statement.append(208)
-
-st=torch.tensor(model_test_statement,dtype=torch.long)
-f= model(st)
-
-[print(list(tag.keys())[i],end=" ") for i in f.max(dim=1).indices]
+# #Testing
+# tests=['which is the max spend  in  may  for  2017  for  alaska','which is the highest spending site','which is the max spend  in  may  for  2017  for  sitegroup alaska']
+#
+# testing_statement=tests[2]
+# l=testing_statement.split()
+# model_test_statement=[]
+#
+# for i in l:
+#     stemed_word = nltk.PorterStemmer().stem(i)
+#     lemmetized_word = nltk.WordNetLemmatizer().lemmatize(i)
+#     if i in vocab.keys():
+#         model_test_statement.append(vocab[i])
+#     elif stemed_word in vocab.keys():
+#         model_test_statement.append(vocab[stemed_word])
+#     elif lemmetized_word in vocab.keys():
+#         model_test_statement.append(vocab[lemmetized_word])
+#     else:
+#         model_test_statement.append(208)
+#
+# if len(model_test_statement)<25:
+#     for i in range(len(model_test_statement),25):
+#         model_test_statement.append(208)
+#
+# st=torch.tensor(model_test_statement,dtype=torch.long)
+# f= model(st)
+#
+# [print(list(tag.keys())[i],end=" ") for i in f.max(dim=1).indices]

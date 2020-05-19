@@ -46,10 +46,13 @@ for i, word in enumerate(words):
     indx2word[i] = word
 for i, tags in enumerate(labels):
     tag[tags] = i
-    indx2tag[i] = tag
+    indx2tag[i] = tags
 
 vocab['PAD'] = len(vocab.keys())
 tag['PAD'] = len(tag.keys())
+indx2word[len(indx2word.keys())]='PAD'
+indx2tag[len(indx2tag.keys())]='PAD'
+
 
 batch_max_len = max([len(i) for i in sent_data])
 
