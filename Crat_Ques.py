@@ -20,9 +20,9 @@ main_grup_dict['for']='O';main_grup_dict['by']='O'
 
 pronouns = ['having', 'has', 'for', 'in']
 
-aggr1 = ['highest', 'most', 'biggest', 'largest', 'smallest', 'least', 'maximum', 'max', 'min', 'minimum', 'average',
+aggrA = ['highest', 'most', 'biggest', 'largest', 'smallest', 'least', 'maximum', 'max', 'min', 'minimum', 'average',
          'mean', 'sum', 'total', 'count', 'lowest', 'all']
-aggr2 = ['greater than', 'less than', 'smaller than', 'higher than', 'lower than', 'around', 'between', 'from',
+aggrB = ['greater than', 'less than', 'smaller than', 'higher than', 'lower than', 'around', 'between', 'from',
          'above', 'below']
 
 by_mains = ['cost', 'spend', 'usage', 'consumption', 'expend', 'kwh', 'gallons', 'kw', 'demand', 'peak kw', 'peak kwh',
@@ -100,7 +100,7 @@ def question_template(ques, object):
 
     if ques in ['what','which','how','where','when']:
         assist_verb = random.sample(['is the', 'are the'], 1)
-        aggregate = random.sample(aggr1, random.randint(0, 1))
+        aggregate = random.sample(aggrA, random.randint(0, 1))
         by_main = random.sample(by_mains, 1)
         main_grup = random.sample(main_grups, random.randint(0, 3))
         month = random.sample(months, random.randint(0, 1))
