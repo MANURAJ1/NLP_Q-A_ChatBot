@@ -27,7 +27,7 @@ labels=list(set(label_list))
 labels.sort()
 
 # Declaring dict for vocab and tags
-tag={}
+tags={}
 vocab={}
 indx2word={}
 indx2tag={}
@@ -35,12 +35,12 @@ indx2tag={}
 for i, word in enumerate(words):
     vocab[word] = i
     indx2word[i]=word
-for i, tags in enumerate(labels):
-    tag[tags] = i
-    indx2tag[i]=tags
+for i, tag in enumerate(labels):
+    tags[tag] = i
+    indx2tag[i]=tag
 
 vocab['PAD']=len(vocab.keys())
-tag['PAD']=len(tag.keys())
+tags['PAD']=len(tags.keys())
 indx2word[len(indx2word.keys())]='PAD'
 indx2tag[len(indx2tag.keys())]='PAD'
 
@@ -76,7 +76,7 @@ HIDDEN_DIM = 64
 # optimizer = optim.SGD(model.parameters(), lr=0.1)
 
 # Model Loading
-model=LSTMTagger(EMBEDDING_DIM,HIDDEN_DIM,len(vocab.keys()), len(tag.keys()))
+model=LSTMTagger(EMBEDDING_DIM,HIDDEN_DIM,len(vocab.keys()), len(tags.keys()))
 model.load_state_dict(torch.load('model_file.pth'))
 model.eval()
 
