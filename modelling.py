@@ -36,7 +36,7 @@ labels.sort()
 
 
 # Declaring dict for vocab and tags
-tag = {}
+tags = {}
 vocab = {}
 indx2word = {}
 indx2tag = {}
@@ -44,12 +44,12 @@ indx2tag = {}
 for i, word in enumerate(words):
     vocab[word] = i
     indx2word[i] = word
-for i, tags in enumerate(labels):
-    tag[tags] = i
-    indx2tag[i] = tags
+for i, tag in enumerate(labels):
+    tags[tag] = i
+    indx2tag[i] = tag
 
 vocab['PAD'] = len(vocab.keys())
-tag['PAD'] = len(tag.keys())
+tags['PAD'] = len(tags.keys())
 indx2word[len(indx2word.keys())]='PAD'
 indx2tag[len(indx2tag.keys())]='PAD'
 
@@ -57,7 +57,7 @@ indx2tag[len(indx2tag.keys())]='PAD'
 batch_max_len = max([len(i) for i in sent_data])
 
 train_sent = vocab['PAD'] * torch.ones(len(label_data), batch_max_len, dtype=torch.long)
-train_label = tag['PAD'] * torch.ones(len(label_data), batch_max_len, dtype=torch.long)
+train_label = tags['PAD'] * torch.ones(len(label_data), batch_max_len, dtype=torch.long)
 
 for j in range(len(label_data)):
     cur_len = len(label_data[j])
@@ -97,7 +97,7 @@ class LSTMTagger(nn.Module):
 
 EMBEDDING_DIM = 64
 HIDDEN_DIM = 64
-model = LSTMTagger(EMBEDDING_DIM, HIDDEN_DIM, len(vocab.keys()), len(tag.keys()))
+model = LSTMTagger(EMBEDDING_DIM, HIDDEN_DIM, len(vocab.keys()), len(tags.keys()))
 loss_function = nn.NLLLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.1)
 

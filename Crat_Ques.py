@@ -115,7 +115,7 @@ def question_template(ques, object):
 
         # Aggregate Settings
         if len(aggregate)>0:
-            if aggregate[0] in ['highest', 'most', 'biggest', 'largest', 'maximum', 'max', 'average']:
+            if aggregate[0] in ['highest', 'most', 'biggest', 'largest', 'maximum', 'max']:
                 aggregate_label = ['max']
             elif aggregate[0] in ['smallest', 'least', 'min', 'minimum', 'lowest']:
                 aggregate_label = ['min']
@@ -227,7 +227,7 @@ def question_template(ques, object):
 
         # Main Group settings
         if main_grup.__len__()>0:
-            if random_selection and main_grup in ['site group','sitegroup', 'site', 'account','vendor']:
+            if random_selection and main_grup[0] in ['site group','sitegroup', 'site', 'account','vendor']:
                 main_grup, main_grup_label,temp = main_grup_with_ob(main_grup, object,main_grup_label)
                 temp=random.sample(['for', 'by','of'], 1) + [main_grup.pop(temp)]
                 main_grup=' and '.join(main_grup).split()
@@ -294,7 +294,7 @@ def question_template(ques, object):
 
         print(x,y)
         # print(sent_label)
-        return ' '.join(sentence),sent_label
+        return ' '.join(sentence),' '.join(sent_label)
 
     # elif question[0]=='how':
     #     assist_verb = random.sample(['much','many'], 1)
@@ -309,10 +309,10 @@ def question_template(ques, object):
     # elif question[0]=='list of':
     #     main_grup = random.sample(main_grups, random.randint(1, 3))
     #     assist_verb =[ '']
-with open("sents.txt",'w') as sf:
-    with open("labels.txt",'w') as sl:
+with open("data\sents.txt",'w') as sf:
+    with open("data\labels.txt",'w') as sl:
 
-        for i in range(100):
+        for i in range(20000):
             #
             object = ''.join(random.sample(list('absdawqe!13213231#$@%231'), random.randint(1, 20)))
             ques=random.sample(['what','which','how','where','when'], 1)[0]
