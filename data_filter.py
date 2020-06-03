@@ -2,7 +2,7 @@ from Test.test_model import model,torch,indx2tag,indx2word,vocab,tags
 import re,pandas as pd,numpy as np,nltk
 
 # df=pd.read_csv('data/chatbot.csv')
-df=pd.read_csv('data/chatbot_sample.csv')
+df=pd.read_csv('data/chatbot.csv')
 df=df.iloc[:,1:]
 col_dict={'vendor':'org_name','sitegroup': 'GROUP_NAME','sitenm': 'Site_Name','sitenb': 'Site_nbr', 'account':'ACCT_NBR','bill':'BILL_IDFR',
        'utility':'UTILITY_TYPE_NAME','location': 'STAT_ABRV','year': 'BLNG_YEAR','month': 'BLNG_MONTH','spend':'SPEND', 'usage':'IMAGE_USAGE' }
@@ -17,6 +17,7 @@ location_df.abbr=location_df.abbr.apply(str.lower)
 
 
 def main_func( testing_statement):
+    testing_statement = re.sub('site *group', 'sitegroup', testing_statement)
     l=testing_statement.split()
     model_test_statement=[]
 
@@ -153,8 +154,10 @@ def main_func( testing_statement):
         if aggr_func:
             if aggr_func == len:
                 print(aggr_func(df2))
+                print(df2[final_cols].head())
             else:
                 print(aggr_func(df2[col_dict[by]]))
+                print(df2[final_cols].head())
         else:
             print(df2[final_cols].head())
 

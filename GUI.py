@@ -1,56 +1,27 @@
 import tkinter as tk
+# from data_filter import main_fun
 
-class Application(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self.pack()
-        self.create_widgets()
-
-    def create_widgets(self):
-        # self.box=tk.
-        self.hi_there = tk.Button(self)
-        self.hi_there["text"] = "Hello World\n(click me)"
-        self.hi_there["command"] = self.say_hi
-        self.hi_there.pack(side="top")
-
-        self.quit = tk.Button(self, text="QUIT", fg="red",
-                              command=self.master.destroy)
-        self.quit.pack(side="bottom")
-
-    def say_hi(self):
-        print("hi there, everyone!")
+from tkinter import ttk,N,W,E,S
 
 root = tk.Tk()
-app = Application(master=root)
-app.mainloop()
-
-from tkinter import *
-from tkinter import ttk
-
-def calculate(*args):
-    try:
-        value = float(feet.get())
-        meters.set((0.3048 * value * 10000.0 + 0.5)/10000.0)
-    except ValueError:
-        pass
-
-root = Tk()
 root.title("Feet to Meters")
+
+def main_func():
+    meters.set(10)
 
 mainframe = ttk.Frame(root, padding="3 3 12 12")
 mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
-feet = StringVar()
-meters = StringVar()
+feet = tk.StringVar()
+meters = tk.StringVar()
 
-feet_entry = ttk.Entry(mainframe, width=7, textvariable=feet)
+feet_entry = ttk.Entry(mainframe, width=27, textvariable=feet)
 feet_entry.grid(column=2, row=1, sticky=(W, E))
 
 ttk.Label(mainframe, textvariable=meters).grid(column=2, row=2, sticky=(W, E))
-ttk.Button(mainframe, text="Calculate", command=calculate).grid(column=3, row=3, sticky=W)
+ttk.Button(mainframe, text="Calculate", command=main_func).grid(column=3, row=3, sticky=W)
 
 ttk.Label(mainframe, text="feet").grid(column=3, row=1, sticky=W)
 ttk.Label(mainframe, text="is equivalent to").grid(column=1, row=2, sticky=E)
@@ -59,6 +30,6 @@ ttk.Label(mainframe, text="meters").grid(column=3, row=2, sticky=W)
 for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
 
 feet_entry.focus()
-root.bind('<Return>', calculate)
+root.bind('<Return>', main_func)
 
 root.mainloop()

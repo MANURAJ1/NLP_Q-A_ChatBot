@@ -12,7 +12,7 @@ assist_verbs = ['is the', 'are the', 'has']
 main_grups = ['site group','sitegroup', 'site', 'account', 'utility', 'bill', 'location', 'month', 'year','vendor']
 main_grups_labels = ['sitegroup0','sitegroup0', 'site0', 'account0', 'utility0', 'bill0', 'location0', 'month0', 'year0','vendor0']
 main_grup_dict={main_grups[i]:main_grups_labels[i] for i in range(len(main_grups))}
-main_grup_dict['site group']= ['site_group0','site_group00']
+# main_grup_dict['site group']= ['site_group0','site_group00']
 main_grup_dict['and']='O'
 main_grup_dict['of']='O'
 main_grup_dict['for']='O';main_grup_dict['by']='O'
@@ -52,11 +52,11 @@ years = ['2017', '2018', '2019', '2020']
 
 # function for adding individual accoount,site ,sitegroup  to main groups
 def main_grup_with_ob(main_grup, ob,main_grup_label):
-    if main_grup.__contains__('site group'):
-        temp_var=main_grup.index('site group')
-        main_grup[temp_var] = 'site group ' + ob
-        main_grup_label=main_grup_dict['site group']+['site_group1']
-    elif main_grup.__contains__('sitegroup'):
+    # if main_grup.__contains__('site group'):
+    #     temp_var=main_grup.index('site group')
+    #     main_grup[temp_var] = 'site group ' + ob
+    #     main_grup_label=main_grup_dict['site group']+['site_group1']
+    if main_grup.__contains__('sitegroup'):
         temp_var = main_grup.index('sitegroup')
         main_grup[temp_var] = 'sitegroup ' + ob
         main_grup_label = [main_grup_dict['sitegroup']] + ['site_group1']
@@ -108,7 +108,11 @@ def question_template(ques, object):
         year = random.sample(years, random.randint(0, 1))
         utility = random.sample(utilities, random.randint(0, 1))
 
-        # main_grup = ['year','site','site group']
+        if 'site group' in main_grup:
+            temp = main_grup.index('site group')
+            main_grup.pop(temp)
+            main_grup.insert(temp,'sitegroup')
+
         #
         # year = ['2019']
         year_and_mnth = False
@@ -150,9 +154,8 @@ def question_template(ques, object):
                     year = ['and year ' + year[0]]
                 year_label = label_generator(year, 'year1')
             else:
-                year = random.sample([' for year', ' in year ', 'yearwise'], 1) + random.sample(['', ' of '],
-                                                                                                1) + month
-                year_label = label_generator(year, 'month1')
+                year = random.sample([' for all years', ' in all years ', 'yearwise'], 1)
+                year_label = label_generator(year, 'year0')
         elif year.__len__() > 0:
             # year = random.sample([' for ', 'in '], 0) + year
             year = random.sample([' for ', 'in '], 1) + year
@@ -227,23 +230,23 @@ def question_template(ques, object):
 
         # Main Group settings
         if main_grup.__len__()>0:
-            if random_selection and main_grup[0] in ['site group','sitegroup', 'site', 'account','vendor']:
+            if random_selection and main_grup[0] in ['sitegroup', 'site', 'account','vendor']:              #'site group' removed
                 main_grup, main_grup_label,temp = main_grup_with_ob(main_grup, object,main_grup_label)
                 temp=random.sample(['for', 'by','of'], 1) + [main_grup.pop(temp)]
                 main_grup=' and '.join(main_grup).split()
                 main_grup_label=['O']+main_grup_label+[main_grup_dict[i] for i in main_grup]
                 main_grup=temp+main_grup
             else:
-                if 'site group' in main_grup:
-                    temp=main_grup.index('site group')
-                    main_grup.pop(temp)
-                    main_grup.insert(temp,'sitegroup')
-                    main_grup= random.sample(['for', 'by','of'], 1)+' and '.join(main_grup).split()
-                    temp = main_grup.index('sitegroup')
-                    main_grup.pop(temp)
-                    main_grup.insert(temp,'site group')
-                else:
-                    main_grup= random.sample(['for', 'by','of'], 1)+' and '.join(main_grup).split()
+                # if 'site group' in main_grup:
+                #     temp=main_grup.index('site group')
+                #     main_grup.pop(temp)
+                #     main_grup.insert(temp,'sitegroup')
+                #     main_grup= random.sample(['for', 'by','of'], 1)+' and '.join(main_grup).split()
+                #     temp = main_grup.index('sitegroup')
+                #     main_grup.pop(temp)
+                #     main_grup.insert(temp,'site group')
+                # else:
+                main_grup= random.sample(['for', 'by','of'], 1)+' and '.join(main_grup).split()
 
                 main_grup_label += [main_grup_dict[i] for i in main_grup]
                 temp_list=[]
@@ -254,21 +257,7 @@ def question_template(ques, object):
                         for j in range(len(i)):
                             temp_list.append(i[j])
                 main_grup_label=temp_list
-        # if len(main_grup) > 0:
-        #     if len(main_grup[0].split()) > 1:
-        #         main_grup_label = [main_grup[0].split()[0] + '0', main_grup[0].split()[0] + '1']
-        #     else:
-        #         main_grup_label = [main_grup[0].split()[0] + '0']
-        #     main_grup[0] = random.sample([' for ', 'of '], 1)[0] + main_grup[0]
-        #     main_grup_label = ['O'] + main_grup_label
-        # if len(main_grup) > 1 and len(main_grup) < 2:
-        #     main_grup = [' and '.join(main_grup)]
-        #     main_grup_label.append('O')
-        #     main_grup_label.append(main_grup[1] + '0')
-        # elif len(main_grup) > 2:
-        #     main_grup = [' and '.join(main_grup)]
-        #     main_grup_label.append('O')
-        #     main_grup_label.append(main_grup[2] + '0')
+
 
 
         if (re.findall('are', assist_verb[0]).__len__() > 0) and len(main_grup) > 0:

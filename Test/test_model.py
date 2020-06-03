@@ -1,4 +1,4 @@
-import torch,nltk
+import torch,nltk,re
 nn=torch.nn
 optim=torch.optim
 F=nn.functional
@@ -82,29 +82,30 @@ model.eval()
 
 
 # #Testing
-# tests=['which is the max spend  in  may  for  2017  for  alaska','which is the highest spending site','which is the max spend  in  may  for  2017  for  sitegroup alaska']
-#
-# testing_statement=tests[2]
-# l=testing_statement.split()
-# model_test_statement=[]
-#
-# for i in l:
-#     stemed_word = nltk.PorterStemmer().stem(i)
-#     lemmetized_word = nltk.WordNetLemmatizer().lemmatize(i)
-#     if i in vocab.keys():
-#         model_test_statement.append(vocab[i])
-#     elif stemed_word in vocab.keys():
-#         model_test_statement.append(vocab[stemed_word])
-#     elif lemmetized_word in vocab.keys():
-#         model_test_statement.append(vocab[lemmetized_word])
-#     else:
-#         model_test_statement.append(208)
-#
-# if len(model_test_statement)<25:
-#     for i in range(len(model_test_statement),25):
-#         model_test_statement.append(208)
-#
-# st=torch.tensor(model_test_statement,dtype=torch.long)
-# f= model(st)
-#
-# [print(list(tag.keys())[i],end=" ") for i in f.max(dim=1).indices]
+tests=['what is the usage by site q!b23e3%13132wa$  for  3 in   ak','which is the max spend  in  may  for  2017  for  alaska','which is the highest spending site','which is the max spend  in  may  for  2017  for  sitegroup alaska']
+
+testing_statement=tests[0]
+testing_statement=re.sub('site *group','sitegroup',testing_statement)
+l=testing_statement.split()
+model_test_statement=[]
+
+for i in l:
+    stemed_word = nltk.PorterStemmer().stem(i)
+    lemmetized_word = nltk.WordNetLemmatizer().lemmatize(i)
+    if i in vocab.keys():
+        model_test_statement.append(vocab[i])
+    elif stemed_word in vocab.keys():
+        model_test_statement.append(vocab[stemed_word])
+    elif lemmetized_word in vocab.keys():
+        model_test_statement.append(vocab[lemmetized_word])
+    else:
+        model_test_statement.append(208)
+
+if len(model_test_statement)<25:
+    for i in range(len(model_test_statement),25):
+        model_test_statement.append(208)
+
+st=torch.tensor(model_test_statement,dtype=torch.long)
+f= model(st)
+
+[indx2tag[i] for i in f.max(dim=1).indices.tolist()[:len(l)]]

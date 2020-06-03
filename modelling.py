@@ -63,7 +63,7 @@ for j in range(len(label_data)):
     cur_len = len(label_data[j])
     for k in range(cur_len):
         train_sent[j][k] = vocab[sent_data[j][k]]
-        train_label[j][k] = tag[label_data[j][k]]
+        train_label[j][k] = tags[label_data[j][k]]
 
 batch_data, batch_labels = train_sent, train_label
 batch_data, batch_labels = torch.autograd.Variable(batch_data), torch.autograd.Variable(batch_labels)
