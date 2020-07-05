@@ -175,17 +175,7 @@ while testing_statement!='quit':
     testing_statement=input('please enter')
     main_func(testing_statement)
 
-GOOGLE_CLOUD_SPEECH_CREDENTIALS = r"""{
-   "type": "service_account",
-   "project_id": "centered-carver-279009",
-   "private_key_id": "ac753c84b4b9b220bdad21a2cff3ccc5061aa5fd",
-   "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDQRT8dHDli00M7\ncX8ex2zWYmu/DyhR/P1ig6SJd/KH2WRv9PLB7DgagEMD9vfwVSAKYRAGMhjvI5+G\nACiTwD+2QHuc4plRn/UzuiPZsEAs9PaUtK7nTCOeIo2hizjt+y1H81n2juqH033H\nO5ap77pWToTrFsvDKO3WWB21Z1btdCdPdsgY4Dp6EGFErcSYln9cRskQWEn5CBbx\nXvqkgK/XghdIMTuSrVxeciChgt4Wb1zK3E+iSw/UWXtNDL0DT/OxAlEbuZDZ5Y9d\nA39pzzWlgV0PVuqKPpJDBI7M8Z/Z6pyWFVSJiqnhQx71LEgEEYkS0xpM0sXKIrq5\nim93fr6bAgMBAAECggEAZehUKwbJ75jG73moBWP4Veg/p3Ofu4pqY39djaRC6IUP\nV5bIB+pxQ0paQEDibdcBQALhZ96wg6bvIg7GzBEIO8HOmmPoOF/oB4D/lL9gj37n\nfrjwUh3X2cM3gQGSACRksi2ZagLhMEfkZg26uXkjOKLf9/YmCt7mjXh9ROuFRdcr\nfteQC6SSECyjEJ6OYXAy5/PgNchXOKThXf67HyC7RBwnXt0G97DQPT0x7Dp+lDNB\nlLqxR0aL4PytWs/oJlMobckygj2hCclpFX6Rl2n7JA3RRVRJ9R/xAeMZWa3newbO\nd+eQC5oT6j5+33MmFQEFvFXbVnS21FTiSTDYPmhSEQKBgQDpqPtEBefXz231jryM\ntL3NCYu4lalttfqnii2uorlbg+JBLrrWnzTcoP7vk5jRseEZFv1RI0WExqFgQBMV\nb7yqXjyT2oWWxNIlCnzM/CfITWxP/VGaIZ+/Xne/hqH3xcS/3MktZDjxoRFhTnYi\nflnJK73whQBdnCQXhbKCHcHesQKBgQDkLtWbVdw4HD/LfJQK+QqHWT4jelbgwa45\nUnm5I0wO6xfvZeDLlbbXDSua9qwETOEFB+tqdfAu2Qq1bNW9GOM+ZROpGglbRymg\nIS9dUOXpL8J2cWUlSc9piVBKmrHzshzF/nu4kdhmReo6C5YoZSI4GCJr/o/gg3Lf\nE1vjqjo9CwKBgCq/hai+Q9pR0tY4FPrRHmBivLM6flLaFk+Mkir/DlZV3JD8UaZu\nXid3NOzz3eOPXZVPhWzQvSk7hc6sKlGjraqlrwOF2SbqP2ATeR2vjD+zGnvP5pwC\nRs2mJNZfdUZ1YjeP1yZ8zYY3Z4yb5DUPVLHfVNKqIpT9ugSrqyru8schAoGAGyhX\n0/0MEMGL9jQFiqjJUAKXGrHc1TM4ASqHwjkpPD1Ow/dkIdbXxBCVOARTxM9BmM+w\nfSM8StcaJy2k4rSrlymAhYfLxUla8uwALyMJug8tHduxJhb60Jy/KaHvvAle01HO\nd9Ej6Eg58F6gqH4g7Hwy3JeXmCkM6u/q59XCyLECgYB7prCOZCyyOaFl/BuZrwme\ntfLc+ikSGwucgow4PiLabSthcHmAoSBWmuGaB+wYbSy9VDkkTr7xobjdBeykY2P9\nxM/V7yhn26ksFNtDvq+l3XsUyikcdme9cPoWmxswXKvLgh/XTO20G7zmLzhPq8WK\nZ8+fIwxnSEXKd0i5yDv4GQ==\n-----END PRIVATE KEY-----\n",
-   "client_email": "raj-592@centered-carver-279009.iam.gserviceaccount.com",
-   "client_id": "115963332645916755552",
-   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-   "token_uri": "https://oauth2.googleapis.com/token",
-   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/raj-592%40centered-carver-279009.iam.gserviceaccount.com"
+GOOGLE_CLOUD_SPEECH_CREDENTIALS = r"""{<GOOGLE_CLOUD_SPEECH_CREDENTIALS from text file>
  }"""
 
 import speech_recognition as sr
